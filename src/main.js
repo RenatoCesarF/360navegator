@@ -3,7 +3,6 @@ import * as THREE from "three";
 var OrbitControls = require('three-orbit-controls')(THREE)
 
 var camera, scene, renderer, controls;
-var mesh;
 
 init();
 animate();
@@ -30,12 +29,15 @@ function init() {
 
     controls = new OrbitControls( camera, renderer.domElement );
     
-    controls.minDistance = 1.0
+    controls.minDistance = 0
     controls.maxDistance = 20.0
     
 
     window.addEventListener( 'resize', onWindowResize, false );
-
+    
+    //Mudança do mouse ao mover a camera
+    window.onmousedown = () => {document.body.style.cursor = "move";}
+    window.onmouseup = () => {document.body.style.cursor = "pointer";}
 }
 
 function onWindowResize() {
@@ -48,6 +50,7 @@ function onWindowResize() {
 }
 
 function animate() {
+
     requestAnimationFrame( animate );
 	renderer.render( scene, camera );
 	controls.update();

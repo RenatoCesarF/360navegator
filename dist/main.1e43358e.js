@@ -37459,9 +37459,17 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
   controls = new OrbitControls(camera, renderer.domElement);
-  controls.minDistance = 1.0;
+  controls.minDistance = 0;
   controls.maxDistance = 20.0;
-  window.addEventListener('resize', onWindowResize, false);
+  window.addEventListener('resize', onWindowResize, false); //Mudança do mouse ao mover a camera
+
+  window.onmousedown = function () {
+    document.body.style.cursor = "move";
+  };
+
+  window.onmouseup = function () {
+    document.body.style.cursor = "pointer";
+  };
 }
 
 function onWindowResize() {
@@ -37503,7 +37511,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37085" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41925" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
