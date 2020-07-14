@@ -37440,30 +37440,34 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var OrbitControls = require('three-orbit-controls')(THREE);
 
-var camera, scene, renderer, controls;
+var camera, scene, renderer, controls; //TODO: arrumar as distorções do canto do navegador
+
 init();
 animate();
 
 function init() {
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
   camera.position.set(1, 0, 0);
-  scene = new THREE.Scene(); //Configurando a esfera e adicionando-a à cena
+  scene = new THREE.Scene(); //30,30,45,500,200,true
+  //Configurando a esfera e adicionando-a à cena
 
-  var geometry = new THREE.CylinderGeometry(30, 30, 45, 500, 200, true); //Formato do objeto
-  //https://live.staticflickr.com/65535/50091270432_dd1da38ee7_5k.jpg
+  var geometry = new THREE.SphereGeometry(50, 32, 32); //Formato do objeto
+  // Imagem original: https://live.staticflickr.com/65535/50091270432_dd1da38ee7_5k.jpg
 
-  var texture = new THREE.TextureLoader().load(_outraPan.default);
+  var texture = new THREE.TextureLoader().load('https://live.staticflickr.com/65535/50091270432_dd1da38ee7_5k.jpg');
   var material = new THREE.MeshBasicMaterial({
     map: texture,
     side: THREE.DoubleSide
   });
   var sphere = new THREE.Mesh(geometry, material); //definindo o objeto sendo da forma de "geometry", e do material de "material"
 
-  scene.add(sphere);
+  scene.add(sphere); //RENDER
+
   renderer = new THREE.WebGLRenderer();
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
+  document.body.appendChild(renderer.domElement); //CONTROLS
+
   controls = new OrbitControls(camera, renderer.domElement);
   controls.minDistance = 0;
   controls.maxDistance = 15.0;
@@ -37517,7 +37521,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34941" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36751" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
