@@ -2,10 +2,10 @@
 import numpy as np
 import cv2
 import sys
-#from fishLen import addFish
 
 
-size = (1080,720) #definindo futuro tamanho de imagem
+
+size = (720,720) #definindo futuro tamanho de imagem
 try: #carregando as imagens
     primeira = cv2.imread('1.png')
     primeira = cv2.resize(primeira, size)
@@ -21,9 +21,6 @@ try: #carregando as imagens
 
     quinta = cv2.imread('5.png')
     quinta = cv2.resize(quinta, size)
-
-
-
 except cv2.error as e:
     print('Invalid frame!\n\n', e)
 cv2.waitKey()
@@ -37,22 +34,22 @@ images.append(quarta)
 images.append(quinta)
 
 
+stitcher = cv2.Stitcher.create(cv2.STITCHER_PANORAMA)#criando a custura
+rat,pan = stitcher.stitch(images) #custurando as imagens
 
 
-stitcher = cv2.Stitcher.create(cv2.STITCHER_PANORAMA)
-rat,pan = stitcher.stitch(images)
-
-
-try:
+try: #retornando a imagem
     cv2.imshow('Imagem criada', pan) #mostrando a imagem
     cv2.waitKey()
     cv2.destroyAllWindows()
     cv2.imwrite("novaPanoramica.png",pan) #salvando imagem na mesma pasta dp script
-    
-
 except cv2.error as e:
     print('Algo deu errado, tente novamente\n\n',e)
     cv2.waitKey()
-    
+
+# TODO:: fazer o openCV construir o chão e o teto
+
+
+
 cv2.waitKey()
 sys.exit()
