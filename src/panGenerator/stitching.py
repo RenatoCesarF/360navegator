@@ -51,4 +51,4 @@ def sideToSide(namePan):
         cv2.waitKey()
 
 
-sideToSide('Panoramica.png')
+sideToSide('PanoramicaWithPainting.png')

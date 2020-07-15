@@ -1,3 +1,7 @@
+//FIXME: Arquivo para tentar passar várias fotos 
+//        Ao mesmo tempo para o cilindro 
+
+
 import "./styles.css";
 import * as THREE from "three";
 var OrbitControls = require('three-orbit-controls')(THREE)
@@ -7,7 +11,6 @@ import pano from './assets/MM.png';
 var camera, scene, renderer, controls;
 
 //TODO: testar as imagens do Marcio com mascara no navegador de esfera
-
 
 init();
 animate();
@@ -19,20 +22,19 @@ function init() {
 
     scene = new THREE.Scene();
 
-
-    //controle do formato da projeção, apenas para testes
-    var input = prompt("Qual o formato de projeção?\n [1] Cilindro \n [2] Esfera")
-    if(input == 1){
-        var geometry = new THREE.CylinderGeometry(30,30,45,500,200,true); //Formato do objeto
-    }
-    else{
-        var geometry = new THREE.SphereGeometry(50,32,42); 
-    }
+    var geometry = new THREE.CylinderGeometry(30,30,45,500); //Formato do objeto
+  
 
     // Imagem original: https://live.staticflickr.com/65535/50091270432_dd1da38ee7_5k.jpg
     var texture = new THREE.TextureLoader().load(pano);
-    
-    var material = new THREE.MeshBasicMaterial( { map: texture, side: THREE.DoubleSide } );
+    var chao = new THREE.TextureLoader().load('./panGenerator/exe1/chao.png');
+
+    texture.wrapS = THREE.RepeatWrapping
+
+    var material = []
+    material.push(new THREE.MeshBasicMaterial( { map: texture, side: THREE.DoubleSide } ));
+    material.push(new THREE.MeshBasicMaterial( { map: chao, side: THREE.DoubleSide } ));
+
     const sphere = new THREE.Mesh(geometry,material); //definindo o objeto sendo da forma de "geometry", e do material de "material"
     scene.add( sphere );
 
