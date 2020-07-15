@@ -37421,8 +37421,8 @@ module.exports = function( THREE ) {
 	return OrbitControls;
 };
 
-},{}],"src/assets/MM.png":[function(require,module,exports) {
-module.exports = "/MM.3b4e3942.png";
+},{}],"src/assets/maskPan.png":[function(require,module,exports) {
+module.exports = "/maskPan.887097b8.png";
 },{}],"src/main.js":[function(require,module,exports) {
 "use strict";
 
@@ -37430,7 +37430,7 @@ require("./styles.css");
 
 var THREE = _interopRequireWildcard(require("three"));
 
-var _MM = _interopRequireDefault(require("./assets/MM.png"));
+var _maskPan = _interopRequireDefault(require("./assets/maskPan.png"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37459,7 +37459,7 @@ function init() {
   } // Imagem original: https://live.staticflickr.com/65535/50091270432_dd1da38ee7_5k.jpg
 
 
-  var texture = new THREE.TextureLoader().load(_MM.default);
+  var texture = new THREE.TextureLoader().load(_maskPan.default);
   var material = new THREE.MeshBasicMaterial({
     map: texture,
     side: THREE.DoubleSide
@@ -37499,7 +37499,7 @@ function animate() {
   renderer.render(scene, camera);
   controls.update();
 }
-},{"./styles.css":"src/styles.css","three":"node_modules/three/build/three.module.js","three-orbit-controls":"node_modules/three-orbit-controls/index.js","./assets/MM.png":"src/assets/MM.png"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./styles.css":"src/styles.css","three":"node_modules/three/build/three.module.js","three-orbit-controls":"node_modules/three-orbit-controls/index.js","./assets/maskPan.png":"src/assets/maskPan.png"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -37527,7 +37527,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36163" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36245" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

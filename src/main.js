@@ -2,7 +2,7 @@ import "./styles.css";
 import * as THREE from "three";
 var OrbitControls = require('three-orbit-controls')(THREE)
 
-import pano from './assets/MM.png';
+import pano from './assets/maskPan.png';
 
 var camera, scene, renderer, controls;
 
