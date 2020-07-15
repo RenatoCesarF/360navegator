@@ -5,23 +5,22 @@ import sys
 
 # FIXME: Erro na imagem do chão.
 def floor(namePan):
-    size = (1366,768) #definindo futuro tamanho de imagem
+    size = (1080,720) #definindo futuro tamanho de imagem
     try: #carregando as imagens
-        centro = cv2.imread('1.png')
+        centro = cv2.imread('./exe1/1.png')
         centro = cv2.resize(centro, size)
 
-        chao = cv2.imread('chao.png')
+        chao = cv2.imread('./exe1/chao.png')
         chao = cv2.resize(chao,size)
 
-       
     except cv2.error as e:
         print('Invalid frame!\n\n', e)
     cv2.waitKey()
 
 
     images = []  #colocando as imagens em um array
-    images.append(centro)
     images.append(chao)
+    images.append(centro)
 
 
     stitcher = cv2.Stitcher.create(cv2.STITCHER_PANORAMA)#criando a costura

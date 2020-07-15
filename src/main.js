@@ -2,7 +2,7 @@ import "./styles.css";
 import * as THREE from "three";
 var OrbitControls = require('three-orbit-controls')(THREE)
 
-import pano from './assets/outraPan.png';
+import pano from './assets/cilynder.jpg';
 
 var camera, scene, renderer, controls;
 
@@ -16,14 +16,20 @@ function init() {
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
     camera.position.set(1,0,0);
 
-
     scene = new THREE.Scene();
-//
-    //Configurando a esfera e adicionando-a à cena
-    var geometry = new THREE.CylinderGeometry(30,30,45,500,200,true); //Formato do objeto
+
+
+    //controle do formato da projeção, apenas para testes
+    var input = prompt("Qual o formato de projeção?\n [1] Cilindro \n [2] Esfera")
+    if(input == 1){
+        var geometry = new THREE.CylinderGeometry(30,30,45,500,200,true); //Formato do objeto
+    }
+    else{
+        var geometry = new THREE.SphereGeometry(50,32,42); 
+    }
 
     // Imagem original: https://live.staticflickr.com/65535/50091270432_dd1da38ee7_5k.jpg
-    var texture = new THREE.TextureLoader().load( 'https://live.staticflickr.com/65535/50091270432_dd1da38ee7_5k.jpg' );
+    var texture = new THREE.TextureLoader().load(pano);
     var material = new THREE.MeshBasicMaterial( { map: texture, side: THREE.DoubleSide } );
     const sphere = new THREE.Mesh(geometry,material); //definindo o objeto sendo da forma de "geometry", e do material de "material"
     scene.add( sphere );

@@ -37421,8 +37421,8 @@ module.exports = function( THREE ) {
 	return OrbitControls;
 };
 
-},{}],"src/assets/outraPan.png":[function(require,module,exports) {
-module.exports = "/outraPan.475ff43a.png";
+},{}],"src/assets/cilynder.jpg":[function(require,module,exports) {
+module.exports = "/cilynder.a6ce1aa4.jpg";
 },{}],"src/main.js":[function(require,module,exports) {
 "use strict";
 
@@ -37430,7 +37430,7 @@ require("./styles.css");
 
 var THREE = _interopRequireWildcard(require("three"));
 
-var _outraPan = _interopRequireDefault(require("./assets/outraPan.png"));
+var _cilynder = _interopRequireDefault(require("./assets/cilynder.jpg"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37448,13 +37448,18 @@ animate();
 function init() {
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
   camera.position.set(1, 0, 0);
-  scene = new THREE.Scene(); //30,30,45,500,200,true
-  //Configurando a esfera e adicionando-a à cena
+  scene = new THREE.Scene(); //controle do formato da projeção, apenas para testes
 
-  var geometry = new THREE.SphereGeometry(50, 32, 32); //Formato do objeto
-  // Imagem original: https://live.staticflickr.com/65535/50091270432_dd1da38ee7_5k.jpg
+  var input = prompt("Qual o formato de projeção?\n [1] Cilindro \n [2] Esfera");
 
-  var texture = new THREE.TextureLoader().load('https://live.staticflickr.com/65535/50091270432_dd1da38ee7_5k.jpg');
+  if (input == 1) {
+    var geometry = new THREE.CylinderGeometry(30, 30, 45, 500, 200, true); //Formato do objeto
+  } else {
+    var geometry = new THREE.SphereGeometry(50, 32, 42);
+  } // Imagem original: https://live.staticflickr.com/65535/50091270432_dd1da38ee7_5k.jpg
+
+
+  var texture = new THREE.TextureLoader().load(_cilynder.default);
   var material = new THREE.MeshBasicMaterial({
     map: texture,
     side: THREE.DoubleSide
@@ -37466,11 +37471,12 @@ function init() {
   renderer = new THREE.WebGLRenderer();
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement); //CONTROLS
+  document.body.appendChild(renderer.domElement); //CAMERA
 
   controls = new OrbitControls(camera, renderer.domElement);
   controls.minDistance = 0;
-  controls.maxDistance = 15.0;
+  controls.maxDistance = 15.0; //Redimencionamento da tela
+
   window.addEventListener('resize', onWindowResize, false); //Mudança do mouse ao mover a camera
 
   window.onmousedown = function () {
@@ -37493,7 +37499,7 @@ function animate() {
   renderer.render(scene, camera);
   controls.update();
 }
-},{"./styles.css":"src/styles.css","three":"node_modules/three/build/three.module.js","three-orbit-controls":"node_modules/three-orbit-controls/index.js","./assets/outraPan.png":"src/assets/outraPan.png"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./styles.css":"src/styles.css","three":"node_modules/three/build/three.module.js","three-orbit-controls":"node_modules/three-orbit-controls/index.js","./assets/cilynder.jpg":"src/assets/cilynder.jpg"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -37521,7 +37527,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36751" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37693" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
