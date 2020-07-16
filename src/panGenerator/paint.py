@@ -39,7 +39,7 @@ def mkMask(image):
     except cv2.error as e:
         print(e)
 
-panoramica = 'cilynder.jpg'
+panoramica = 'withFloor.png'
 
 mkMask(panoramica)
 paint(panoramica)

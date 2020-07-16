@@ -2,11 +2,10 @@ import "./styles.css";
 import * as THREE from "three";
 var OrbitControls = require('three-orbit-controls')(THREE)
 
-import pano from './assets/maskPan.png';
+import pano from './assets/original.jpg';
 
 var camera, scene, renderer, controls;
 
-//TODO: testar as imagens do Marcio com mascara no navegador de esfera
 
 
 init();
