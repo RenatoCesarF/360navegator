@@ -6,6 +6,8 @@ import pano from './assets/original.jpg';
 
 var camera, scene, renderer, controls;
 
+//TODO: testar o TorusGeometry
+//
 
 
 init();

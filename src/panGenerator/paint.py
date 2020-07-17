@@ -9,13 +9,15 @@ def paint(image):
         print(e)
     cv2.waitKey()
 
-
+    print('...Pintando...')
     painted = cv2.inpaint(image,mask,3,cv2.INPAINT_TELEA)
 
     try: #retornando a imagem
+        print('\nImagem repintada\n')
         cv2.imshow('pintada', painted) #mostrando a imagem
         cv2.imwrite('painted.png', painted)
         cv2.waitKey() #assim que alguma tecla for pressionada as imagem se fecha
+        print('\nImagem repintada\n')
         
     except cv2.error as e:
         print('Algo deu errado, tente novamente\n\n',e)
@@ -28,18 +30,19 @@ def mkMask(image):
     except cv2.error as e:
         print(e)
 
-    myColor = [ 0,0,0,0,0,0]
+    myColor = [ 0,0,0,50,50,200]
 
-    try:
-        imgHSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    try: 
+        imgHSV = cv2.cvtColor(img,cv2.COLOR_BGR2HSV) #esse ultimo parametro transforma a imagem em preto e branco, testar sem ele.
         lower = np.array(myColor[0:3])
         upper = np.array(myColor[3:6])
         mask = cv2.inRange(imgHSV,lower,upper)
         cv2.imwrite("mask.png",mask)
+        print('\nMascara criada\n')
     except cv2.error as e:
         print(e)
 
-panoramica = 'withFloor.png'
+panoramica = 'panoramica.png'
 
 mkMask(panoramica)
 paint(panoramica)

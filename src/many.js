@@ -10,7 +10,6 @@ import pano from './assets/MM.png';
 
 var camera, scene, renderer, controls;
 
-//TODO: testar as imagens do Marcio com mascara no navegador de esfera
 
 init();
 animate();

@@ -14,14 +14,14 @@ def stitch(images):
 
     
 def sideToSide(namePan):
-
-    images = []  #colocando as imagens em um array
+ 
+    images = [] # Array de imagens 
     #1366,786
-    size = (800,600) #definindo futuro tamanho de imagem
-    try: #carregando as imagens
+    size = (800,600) #definindo futuro tamanho das imagens
+    try: 
 
-        for i in range(1,6):
-            image = cv2.imread('./exe2/output/teste{}.png'.format(i))
+        for i in range(1, 8): #carregando as imagens (da primeira à quinta)
+            image = cv2.imread('./exe2/output/test{}.png'.format(i))
             print('Adicionando a image',i,' à lista de images')
             image = cv2.resize(image, size)
             images.append(image)
@@ -37,12 +37,13 @@ def sideToSide(namePan):
 
     try: #retornando a imagem
         horizontal = cv2.flip(pan,1) #corrigindo o efeito espelho
+        cv2.imwrite(namePan, horizontal) #salvando imagem na mesma pasta do script            
         cv2.imshow('Imagem criada', horizontal) #mostrando a imagem
         cv2.waitKey() #assim que alguma tecla for pressionada as imagem se fecha
-        cv2.imwrite(namePan, horizontal) #salvando imagem na mesma pasta do script
+      
         
     except cv2.error as e:
-        print('Algo deu errado, tente novamente\n\n',e)
+        print('\nAlgo deu errado, tente novamente\n\n',e)
         cv2.waitKey()
  
 
