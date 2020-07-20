@@ -3,6 +3,10 @@ Este é o script principal do programa, é aqui que a "magia"
 acontece. Usando openCV o programa pega diversa fotos, do mesmo
 ambiente, da pasta output e as transforma em uma foto só. Quanto
 mais fotos melhor.
+
+
+TODO: ver se é possível fazer duas panoramicas, uma do chao e uma do teto
+e ai junta-las depois
 '''
 
 import numpy as np
@@ -15,14 +19,14 @@ def stitch(images):
     return pan
 
     
-def sideToSide(namePan):
- 
+def sideToSide(namePan,many):
+    many = many + 1
     images = [] # Array de imagens 
     #1366,786
     size = (800,600) #definindo futuro tamanho das imagens
     try: 
 
-        for i in range(1, 21): #carregando as imagens (da primeira à quinta)
+        for i in range(1, many): #carregando as imagens (da primeira à quinta)
             image = cv2.imread('./output/test{}.png'.format(i))
             print('Adicionando a image',i,' à lista de images')
             image = cv2.resize(image, size)
@@ -49,4 +53,4 @@ def sideToSide(namePan):
         cv2.waitKey()
  
 
-sideToSide('panoramica.png')
+sideToSide('panoramica3.png',6)

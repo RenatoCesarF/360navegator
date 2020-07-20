@@ -7,44 +7,46 @@ processo.
 '''
 
 import cv2
+import os
 
-print('\nAdicionando As imagens na régua...\n')
+def rule(images):
+    print('\nAdicionando As imagens na régua...\n')
 
-for i in range(1,21):
-    nameFile = '{}.png'.format(i)
+    images = images + 1
 
-    path = './input/{}'.format(nameFile)
-    frame = cv2.imread("./totalBlack.png")
-    # Essa imagem "frame" é a imagem que ficará de background em todas
-    # as nossas imagens, quanto maior a qualidade dela melhor a qualidade
-    # final da nossa panoramica. Ela é preta pelo motivo de termos um 
-    # script que completa brexas pretas da imagem, que pode ser aplicado
-    # na panoramica final.
+    for i in range(1,images):
+        nameFile = '{}.png'.format(i)
 
-    try:   
-        image = cv2.imread(path)
-    
-    except cv2.error as e:
-        print(e)
+        path = './input/{}'.format(nameFile)
+        frame = cv2.imread("./totalBlack.png")
+        # Essa imagem "frame" é a imagem que ficará de background em todas
+        # as nossas imagens, quanto maior a qualidade dela melhor a qualidade
+        # final da nossa panoramica. Ela é preta pelo motivo de termos um 
+        # script que completa brexas pretas da imagem, que pode ser aplicado
+        # na panoramica final.
 
-
-    x_offset = 2
-    w_ = frame.shape[1] - x_offset
-    h_ = w_ * (image.shape[0] / image.shape[1])
-    y_offset = int(frame.shape[0] - h_) // 2
+        try:   
+            image = cv2.imread(path)
+        
+        except cv2.error as e:
+            print(e)
 
 
-
-    image = cv2.resize(image, (int(w_), int(h_)))
-    frame[y_offset:y_offset+image.shape[0], x_offset:x_offset+image.shape[1]] = image
-
-    cv2.imwrite('./output/test{}.png'.format(i), frame)
-
-    i = i + 1
+        x_offset = 2
+        w_ = frame.shape[1] - x_offset
+        h_ = w_ * (image.shape[0] / image.shape[1])
+        y_offset = int(frame.shape[0] - h_) // 2
 
 
 
+        image = cv2.resize(image, (int(w_), int(h_)))
+        frame[y_offset:y_offset+image.shape[0], x_offset:x_offset+image.shape[1]] = image
 
+        cv2.imwrite('./output/test{}.png'.format(i), frame)
+
+        i = i + 1
+
+rule(5)
 
 
 

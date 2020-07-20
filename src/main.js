@@ -2,13 +2,15 @@
 Este é o arquivo que renderiza as imagens usando
 Three.js.
 
+link para pegar imagens:
+https://unsplash.com/s/photos/360-panorama
+
 */
 import "./styles.css";
 import * as THREE from "three";
 var OrbitControls = require('three-orbit-controls')(THREE)
 
-import pano from './assets/original.jpg';
-import teste from './panGenerator/painted.png'
+import pano from './assets/teste2.jpeg';
 
 var camera, scene, renderer, controls;
 
@@ -34,7 +36,7 @@ function init() {
     }
 
     // Imagem original: https://live.staticflickr.com/65535/50091270432_dd1da38ee7_5k.jpg
-    var texture = new THREE.TextureLoader().load(teste);
+    var texture = new THREE.TextureLoader().load(pano);
     
     var material = new THREE.MeshBasicMaterial( { map: texture, side: THREE.DoubleSide } );
     const sphere = new THREE.Mesh(geometry,material); //definindo o objeto sendo da forma de "geometry", e do material de "material"
