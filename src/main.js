@@ -1,3 +1,8 @@
+/*
+Este é o arquivo que renderiza as imagens usando
+Three.js.
+
+*/
 import "./styles.css";
 import * as THREE from "three";
 var OrbitControls = require('three-orbit-controls')(THREE)
