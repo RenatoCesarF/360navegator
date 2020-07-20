@@ -1,3 +1,13 @@
+'''
+Usando da função inrange, este script faz
+uma mascara preto-e-branco onde todas as partes
+onde a imagem for 100% preto, na mascara serão 
+brancas, aplica-se então essa mascara em cima da 
+imagem normal, a função inpaint tenta completar a 
+imagem de acordo com a mascara, repintando as partes
+brancas da mascara.
+'''
+
 import numpy as np
 import cv2
 
@@ -30,7 +40,7 @@ def mkMask(image):
     except cv2.error as e:
         print(e)
 
-    myColor = [ 0,0,0,50,50,200]
+    myColor = [ 0,0,0,0,0,0]
 
     try: 
         imgHSV = cv2.cvtColor(img,cv2.COLOR_BGR2HSV) #esse ultimo parametro transforma a imagem em preto e branco, testar sem ele.

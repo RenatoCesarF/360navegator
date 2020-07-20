@@ -1,10 +1,12 @@
+'''
+Este é o script principal do programa, é aqui que a "magia"
+acontece. Usando openCV o programa pega diversa fotos, do mesmo
+ambiente, da pasta output e as transforma em uma foto só. Quanto
+mais fotos melhor.
+'''
+
 import numpy as np
 import cv2
-'''
-FIXME: 1, tirar mais fotos pra tentar junta-las aqui de novo, 
-        do chão, junto com a panoramica horizontal
-
-'''
 
 
 def stitch(images):
@@ -20,8 +22,8 @@ def sideToSide(namePan):
     size = (800,600) #definindo futuro tamanho das imagens
     try: 
 
-        for i in range(1, 8): #carregando as imagens (da primeira à quinta)
-            image = cv2.imread('./exe2/output/test{}.png'.format(i))
+        for i in range(1, 21): #carregando as imagens (da primeira à quinta)
+            image = cv2.imread('./output/test{}.png'.format(i))
             print('Adicionando a image',i,' à lista de images')
             image = cv2.resize(image, size)
             images.append(image)

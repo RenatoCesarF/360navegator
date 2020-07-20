@@ -3,11 +3,9 @@ import * as THREE from "three";
 var OrbitControls = require('three-orbit-controls')(THREE)
 
 import pano from './assets/original.jpg';
+import teste from './panGenerator/painted.png'
 
 var camera, scene, renderer, controls;
-
-//TODO: testar o TorusGeometry
-//
 
 
 init();
@@ -31,7 +29,7 @@ function init() {
     }
 
     // Imagem original: https://live.staticflickr.com/65535/50091270432_dd1da38ee7_5k.jpg
-    var texture = new THREE.TextureLoader().load(pano);
+    var texture = new THREE.TextureLoader().load(teste);
     
     var material = new THREE.MeshBasicMaterial( { map: texture, side: THREE.DoubleSide } );
     const sphere = new THREE.Mesh(geometry,material); //definindo o objeto sendo da forma de "geometry", e do material de "material"

@@ -1,6 +1,8 @@
-#TODO: faazer um metodo de corde de imagem,
-# este seria um outro jeito de sumir com as
-# manchas pretas das imagens
+'''
+Esta função serve apenas para cortar determinada
+porcentagem da imagem caso seja necessário,
+na maioria das vezes não é
+'''
 
 import cv2  
 import numpy as np

@@ -1,2 +1,5 @@
 node_modules
 .cache
+
+src/panGenerator/input/*
+src/panGenerator/output/*
