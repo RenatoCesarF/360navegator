@@ -10,7 +10,7 @@ import "./styles.css";
 import * as THREE from "three";
 var OrbitControls = require('three-orbit-controls')(THREE)
 
-import pano from './assets/teste2.jpeg';
+import pano from './assets/panoramica3.png';
 
 var camera, scene, renderer, controls;
 
