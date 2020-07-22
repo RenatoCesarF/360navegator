@@ -4,9 +4,8 @@ acontece. Usando openCV o programa pega diversa fotos, do mesmo
 ambiente, da pasta output e as transforma em uma foto só. Quanto
 mais fotos melhor.
 
-
-TODO: ver se é possível fazer duas panoramicas, uma do chao e uma do teto
-e ai junta-las depois
+FIXME: o problema é que ele não esta pegando certas fotos, arrumar amanha de manha 
+esse for zuado
 '''
 
 import numpy as np
@@ -17,16 +16,14 @@ def stitch(images):
     stitcher = cv2.Stitcher.create(cv2.STITCHER_PANORAMA)#criando a costura
     rat, pan = stitcher.stitch(images) #costurando as imagens
     return pan
-
-    
-def sideToSide(namePan,horizontal):
+   
+def sideToSide(namePan,amount):
 
     images = [] # Array de imagens 
     #1366,786
     size = (1920,1080) #definindo futuro tamanho das imagens
     try: 
-
-        for i in range(0,horizontal): #carregando as imagens (da primeira à quinta)
+        for i in range(0,amount): #carregando as imagens (da primeira à quinta)
             image = cv2.imread('./output/test{}.png'.format(i))
             print('Adicionando a image',i,' à lista de images')
             image = cv2.resize(image, size)
@@ -40,17 +37,15 @@ def sideToSide(namePan,horizontal):
 
     pan = stitch(images)
 
-
     try: #retornando a imagem
         horizontal = cv2.flip(pan,1) #corrigindo o efeito espelho
         cv2.imwrite(namePan, horizontal) #salvando imagem na mesma pasta do script            
         cv2.imshow('Imagem criada', horizontal) #mostrando a imagem
         cv2.waitKey() #assim que alguma tecla for pressionada as imagem se fecha
-      
-        
+             
     except cv2.error as e:
         print('\nAlgo deu errado, tente novamente\n\n',e)
         cv2.waitKey()
  
 
-sideToSide('horizontal.png',2)
+sideToSide('horizontal.png',12)

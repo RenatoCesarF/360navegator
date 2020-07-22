@@ -49,4 +49,4 @@ def upAndDown(namePan,amount):
         cv2.waitKey()
  
 
-upAndDown('panoramica360.png',2)
+upAndDown('panoramica360.png',50)

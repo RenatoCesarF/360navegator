@@ -7,7 +7,7 @@ import "./styles.css";
 import * as THREE from "three";
 var OrbitControls = require('three-orbit-controls')(THREE)
 
-import pano from './assets/panoramica5.png'; // Essa é a ultima imagem retornada dos scripts python
+import pano from './assets/horizontal.png'; // Essa é a ultima imagem retornada dos scripts python
 
 
 var camera, scene, renderer, controls;
@@ -25,7 +25,7 @@ function init() {
 
 
     var geometry = new THREE.SphereGeometry(50,32,42); 
-
+    
 
     // Imagem original: https://live.staticflickr.com/65535/50091270432_dd1da38ee7_5k.jpg
     var texture = new THREE.TextureLoader().load(pano);
