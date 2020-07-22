@@ -10,9 +10,12 @@ import "./styles.css";
 import * as THREE from "three";
 var OrbitControls = require('three-orbit-controls')(THREE)
 
-import pano from './assets/panoramica3.png';
+// Essa é a ultima imagem retornada dos scripts python
+import pano from './assets/panoramica5.png'; 
+
 
 var camera, scene, renderer, controls;
+
 
 
 init();
@@ -79,3 +82,4 @@ function animate() {
 	renderer.render( scene, camera );
     controls.update();
 }
+

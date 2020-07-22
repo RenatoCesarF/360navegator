@@ -5,3 +5,23 @@ body, html {
   cursor: pointer;
   
 }
+.fullscreen{
+  position: fixed;
+  bottom: 0%;
+  right: -7%;
+  margin: 2%;
+
+}
+.icon{
+  position: relative;
+  display: flex;
+  width: 25%;
+  opacity: 70%;
+  transition: ease-in-out; 
+  -webkit-transition: all 0.3s;
+
+}
+.icon:hover{
+  opacity: 120%;
+  transform: scale(1.5);
+}

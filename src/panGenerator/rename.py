@@ -1,7 +1,11 @@
 # Este script renomeia as imagens de input para serem imagens com nomes de 0 a x
 import os
+import os.path
 from glob import glob
-number = 15
+
+
+
+number = 15 #numero inicial da contagem
 for number , filename in enumerate(glob("./input/*.jpg")):
     try:
         os.rename(filename, "./input/{0}.jpg".format(number))

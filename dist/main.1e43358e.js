@@ -37421,8 +37421,8 @@ module.exports = function( THREE ) {
 	return OrbitControls;
 };
 
-},{}],"src/assets/panoramica3.png":[function(require,module,exports) {
-module.exports = "/panoramica3.9bfab2d0.png";
+},{}],"src/assets/panoramica5.png":[function(require,module,exports) {
+module.exports = "/panoramica5.cea3f538.png";
 },{}],"src/main.js":[function(require,module,exports) {
 "use strict";
 
@@ -37430,7 +37430,7 @@ require("./styles.css");
 
 var THREE = _interopRequireWildcard(require("three"));
 
-var _panoramica = _interopRequireDefault(require("./assets/panoramica3.png"));
+var _panoramica = _interopRequireDefault(require("./assets/panoramica5.png"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37446,7 +37446,8 @@ link para pegar imagens:
 https://unsplash.com/s/photos/360-panorama
 
 */
-var OrbitControls = require('three-orbit-controls')(THREE);
+var OrbitControls = require('three-orbit-controls')(THREE); // Essa é a ultima imagem retornada dos scripts python
+
 
 var camera, scene, renderer, controls;
 init();
@@ -37506,7 +37507,7 @@ function animate() {
   renderer.render(scene, camera);
   controls.update();
 }
-},{"./styles.css":"src/styles.css","three":"node_modules/three/build/three.module.js","three-orbit-controls":"node_modules/three-orbit-controls/index.js","./assets/panoramica3.png":"src/assets/panoramica3.png"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./styles.css":"src/styles.css","three":"node_modules/three/build/three.module.js","three-orbit-controls":"node_modules/three-orbit-controls/index.js","./assets/panoramica5.png":"src/assets/panoramica5.png"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -37534,7 +37535,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36809" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43853" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
