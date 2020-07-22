@@ -20,13 +20,13 @@ def stitch(images):
 
     
 def sideToSide(namePan,horizontal):
-    horizontal = horizontal + 1
+
     images = [] # Array de imagens 
     #1366,786
     size = (1920,1080) #definindo futuro tamanho das imagens
     try: 
 
-        for i in range(1,horizontal): #carregando as imagens (da primeira à quinta)
+        for i in range(0,horizontal): #carregando as imagens (da primeira à quinta)
             image = cv2.imread('./output/test{}.png'.format(i))
             print('Adicionando a image',i,' à lista de images')
             image = cv2.resize(image, size)
@@ -53,4 +53,4 @@ def sideToSide(namePan,horizontal):
         cv2.waitKey()
  
 
-sideToSide('horizontal.png',17)
+sideToSide('horizontal.png',2)

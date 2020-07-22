@@ -14,8 +14,7 @@ def stitch(images):
     return pan
 
     
-def upAndDown(namePan,many):
-    many = many + 1
+def upAndDown(namePan,amount):
     images = [] 
     size = (1920,1080) #definindo futuro tamanho das imagens
     try: 
@@ -23,7 +22,7 @@ def upAndDown(namePan,many):
         panoramica = cv2.imread('horizontal.png')
         images.append(panoramica)
 
-        for i in range(1,many): #carregando as imagens (da primeira à quinta)
+        for i in range(0,amount): #carregando as imagens (da primeira à quinta)
             image = cv2.imread('./output/test{}.png'.format(i))
             print('Adicionando a image',i,' à lista de images')
             image = cv2.resize(image, size)
@@ -50,4 +49,4 @@ def upAndDown(namePan,many):
         cv2.waitKey()
  
 
-upAndDown('panoramica360.png',33)
+upAndDown('panoramica360.png',2)

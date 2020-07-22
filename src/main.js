@@ -2,21 +2,15 @@
 Este é o arquivo que renderiza as imagens usando
 Three.js.
 
-link para pegar imagens:
-https://unsplash.com/s/photos/360-panorama
-
 */
 import "./styles.css";
 import * as THREE from "three";
 var OrbitControls = require('three-orbit-controls')(THREE)
 
-// Essa é a ultima imagem retornada dos scripts python
-import pano from './assets/panoramica5.png'; 
+import pano from './assets/panoramica5.png'; // Essa é a ultima imagem retornada dos scripts python
 
 
 var camera, scene, renderer, controls;
-
-
 
 init();
 animate();
@@ -29,14 +23,9 @@ function init() {
     scene = new THREE.Scene();
 
 
-    //controle do formato da projeção, apenas para testes
-    var input = prompt("Qual o formato de projeção?\n [1] Cilindro \n [2] Esfera")
-    if(input == 1){
-        var geometry = new THREE.CylinderGeometry(30,30,45,500,200,true); //Formato do objeto
-    }
-    else{
-        var geometry = new THREE.SphereGeometry(50,32,42); 
-    }
+
+    var geometry = new THREE.SphereGeometry(50,32,42); 
+
 
     // Imagem original: https://live.staticflickr.com/65535/50091270432_dd1da38ee7_5k.jpg
     var texture = new THREE.TextureLoader().load(pano);
@@ -83,3 +72,32 @@ function animate() {
     controls.update();
 }
 
+function toggleFullScreen() {
+    if ((document.fullScreenElement && document.fullScreenElement !== null) ||    
+      (!document.mozFullScreen && !document.webkitIsFullScreen)){
+          
+      if (document.documentElement.requestFullScreen) {  
+        document.documentElement.requestFullScreen();  
+      } 
+      
+      else if (document.documentElement.mozRequestFullScreen) {  
+        document.documentElement.mozRequestFullScreen();  
+      } 
+      else if (document.documentElement.webkitRequestFullScreen) {  
+        document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);  
+      }  
+    } 
+    else {  
+      if (document.cancelFullScreen) {  
+        document.cancelFullScreen();  
+      } else if (document.mozCancelFullScreen) {  
+        document.mozCancelFullScreen();  
+      } else if (document.webkitCancelFullScreen) {  
+        document.webkitCancelFullScreen();  
+      }  
+    }  
+}
+
+function changeForm(){
+  geometry = THREE.CylinderGeometry(30,30,45,500,200,true); //Formato do objeto
+}

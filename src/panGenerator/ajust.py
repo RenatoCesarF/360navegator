@@ -9,14 +9,13 @@ processo.
 import cv2
 import os
 
-def ajust(images):
-    print('\nAdicionando As imagens na régua...\n')
+def ajust(amount):
+    print('\n Ajustando imagens...\n')
 
-
-
-    for i in range(0,images):
+    amount = amount + 1
+    for i in range(0,amount):
         nameFile = '{}.png'.format(i)
-
+        print('imagem {} ajustada'.format(i))
         path = './input/{}'.format(nameFile)
         frame = cv2.imread("./totalBlack.png")
         # Essa imagem "frame" é a imagem que ficará de background em todas
@@ -46,11 +45,4 @@ def ajust(images):
 
         i = i + 1
 
-ajust(10)
-
-
-
-
-
-
-
+ajust(50)
