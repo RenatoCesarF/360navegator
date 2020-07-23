@@ -25,7 +25,6 @@ def blackParts(panoramica):
 
         try: #retornando a imagem
             print('\nImagem repintada\n')
-            cv2.imshow('pintada', painted) #mostrando a imagem
             cv2.imwrite('painted.png', painted)
             cv2.waitKey() #assim que alguma tecla for pressionada as imagem se fecha
             print('\nImagem repintada\n')

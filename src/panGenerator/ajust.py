@@ -16,8 +16,8 @@ def ajust(amount):
         nameFile = '{}.png'.format(i)
         print('imagem {} ajustada'.format(i))
         path = './input/{}'.format(nameFile)
-        frame = cv2.imread("./totalBlack.png")
-        # Essa imagem "frame" é a imagem que ficará de background em todas
+        frame = cv2.imread("1920.png")
+        # Essa imagem "frame" é o background em todas
         # as nossas imagens, quanto maior a qualidade dela melhor a qualidade
         # final da nossa panoramica. Ela é preta pelo motivo de termos um 
         # script que completa brexas pretas da imagem, que pode ser aplicado
@@ -40,7 +40,7 @@ def ajust(amount):
         image = cv2.resize(image, (int(w_), int(h_)))
         frame[y_offset:y_offset+image.shape[0], x_offset:x_offset+image.shape[1]] = image
 
-        cv2.imwrite('./output/test{}.png'.format(i), frame)
+        cv2.imwrite('./output/ajusted{}.png'.format(i), frame)
 
         i = i + 1
 
@@ -49,7 +49,7 @@ def count():
     for f in glob.glob('./input/*.*'):
         amount = amount + 1
 
-    print(amount)
+    print(amount,'arquivos no total no diretório')
     return amount
 
 quantidade = count()

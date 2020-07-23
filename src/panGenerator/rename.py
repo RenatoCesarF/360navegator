@@ -4,7 +4,8 @@ import os.path
 from glob import glob
 
 def rename():
-    for number , filename in enumerate(glob("./input/*.jpg")):
+    print('\nRenomeando...\n')
+    for number , filename in enumerate(glob("./input/*.*")):
         try:
             os.rename(filename, "./input/{0}.png".format(number))
         except OSError as e:

@@ -7,7 +7,7 @@ import "./styles.css";
 import * as THREE from "three";
 var OrbitControls = require('three-orbit-controls')(THREE)
 
-import pano from './assets/horizontal.png'; // Essa é a ultima imagem retornada dos scripts python
+import pano from './assets/teste2.jpeg'; // Essa é a ultima imagem retornada dos scripts python
 
 
 var camera, scene, renderer, controls;
