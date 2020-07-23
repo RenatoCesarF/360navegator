@@ -6,7 +6,7 @@ semi pronto
 
 import numpy as np
 import cv2
-
+import glob
 
 def stitch(images):
     stitcher = cv2.Stitcher.create(cv2.STITCHER_PANORAMA)#criando a costura
@@ -14,7 +14,7 @@ def stitch(images):
     return pan
 
     
-def upAndDown(namePan,amount):
+def floor(namePan,amount):
     images = [] 
     size = (1920,1080) #definindo futuro tamanho das imagens
     try: 
@@ -48,5 +48,14 @@ def upAndDown(namePan,amount):
         print('\nAlgo deu errado, tente novamente\n\n',e)
         cv2.waitKey()
  
+def count():
+    amount = 0
+    for f in glob.glob('./output/*.*'):
+        amount = amount + 1
 
-upAndDown('panoramica360.png',50)
+    print(amount)
+    return amount
+
+
+quantidade = count()
+#floor('panoramica360.png',quantidade)

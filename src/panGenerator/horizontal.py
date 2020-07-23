@@ -7,7 +7,7 @@ mais fotos melhor.
 FIXME: o problema é que ele não esta pegando certas fotos, arrumar amanha de manha 
 esse for zuado
 '''
-
+import glob
 import numpy as np
 import cv2
 
@@ -17,13 +17,13 @@ def stitch(images):
     rat, pan = stitcher.stitch(images) #costurando as imagens
     return pan
    
-def sideToSide(namePan,amount):
+def horizontal(namePan,amount):
 
     images = [] # Array de imagens 
     #1366,786
     size = (1920,1080) #definindo futuro tamanho das imagens
     try: 
-        for i in range(0,amount): #carregando as imagens (da primeira à quinta)
+        for i in range(3,6): #carregando as imagens (da primeira à quinta)
             image = cv2.imread('./output/test{}.png'.format(i))
             print('Adicionando a image',i,' à lista de images')
             image = cv2.resize(image, size)
@@ -47,5 +47,14 @@ def sideToSide(namePan,amount):
         print('\nAlgo deu errado, tente novamente\n\n',e)
         cv2.waitKey()
  
+def count():
+    amount = 0
+    for f in glob.glob('./output/*.*'):
+        amount = amount + 1
 
-sideToSide('horizontal.png',12)
+    print(amount)
+    return amount
+
+
+quantidade = count()
+horizontal('horizontal.png',quantidade)

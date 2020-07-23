@@ -5,14 +5,13 @@ blemas de redimensionamento que o programa pode achar durante os
 processo.
 
 '''
-
+import glob
 import cv2
 import os
 
+
 def ajust(amount):
     print('\n Ajustando imagens...\n')
-
-    amount = amount + 1
     for i in range(0,amount):
         nameFile = '{}.png'.format(i)
         print('imagem {} ajustada'.format(i))
@@ -45,4 +44,13 @@ def ajust(amount):
 
         i = i + 1
 
-ajust(50)
+def count():
+    amount = 0
+    for f in glob.glob('./input/*.*'):
+        amount = amount + 1
+
+    print(amount)
+    return amount
+
+quantidade = count()
+ajust(quantidade)
