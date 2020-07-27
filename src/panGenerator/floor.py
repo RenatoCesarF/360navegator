@@ -2,6 +2,7 @@
 Esta versão pega uma panoramica horizontal e cola as imagens nela
 em vez de tentar criar tudo de uma vez, ela já pega algo
 semi pronto
+
 '''
 
 import numpy as np
@@ -21,7 +22,8 @@ def floor(namePan,amount):
         panoramica = cv2.imread('horizontal.png')
         images.append(panoramica)
 
-        for i in range(49,50): #carregando as imagens 
+
+        for i in range(0,amount): #carregando as imagens 
             image = cv2.imread('./output/ajusted{}.png'.format(i))
             print('Adicionando a image',i,' à lista de images')
             image = cv2.resize(image, size)

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Navegador 360°</title>
+    <meta charset="UTF-8">
+  <link rel="stylesheet" href="/main.1e43358e.css"></head>
+
+  <body>
+
+    <div class="fullscreen">
+      <img class="icon" role="img" src="/fullscreen.99242cc6.svg" onclick="toggleFullScreen()">
+    </div>
+
+    
+
+    <script src="/main.1e43358e.js"></script>
+    <div class="tooltip">Texto</div>
+
+    <script>function toggleFullScreen() {
+  if (document.fullScreenElement && document.fullScreenElement !== null || !document.mozFullScreen && !document.webkitIsFullScreen) {
+    if (document.documentElement.requestFullScreen) {
+      document.documentElement.requestFullScreen();
+    } else if (document.documentElement.mozRequestFullScreen) {
+      document.documentElement.mozRequestFullScreen();
+    } else if (document.documentElement.webkitRequestFullScreen) {
+      document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+  } else {
+    if (document.cancelFullScreen) {
+      document.cancelFullScreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitCancelFullScreen) {
+      document.webkitCancelFullScreen();
+    }
+  }
+}</script>
+  </body>
+</html>

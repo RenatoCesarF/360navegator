@@ -12,10 +12,10 @@ import os
 
 def ajust(amount):
     print('\n Ajustando imagens...\n')
-    for i in range(0,amount):
-        nameFile = '{}.png'.format(i)
-        print('imagem {} ajustada'.format(i))
+    for i in range(1,amount):
+        nameFile = '{}.jpg'.format(i)
         path = './input/{}'.format(nameFile)
+        print('imagem {} ajustada'.format(i))
         frame = cv2.imread("1920.png")
         # Essa imagem "frame" é o background em todas
         # as nossas imagens, quanto maior a qualidade dela melhor a qualidade
@@ -30,7 +30,7 @@ def ajust(amount):
             print(e)
 
 
-        x_offset = 2
+        x_offset = 5
         w_ = frame.shape[1] - x_offset
         h_ = w_ * (image.shape[0] / image.shape[1])
         y_offset = int(frame.shape[0] - h_) // 2
@@ -43,6 +43,7 @@ def ajust(amount):
         cv2.imwrite('./output/ajusted{}.png'.format(i), frame)
 
         i = i + 1
+        
 
 def count():
     amount = 0
