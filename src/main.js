@@ -39,7 +39,7 @@ class Scene{
     texture.wrapS = THREE.RepeatWrapping //Espelhando a imagem
     texture.repeat.x = -1
   
-    const material = new THREE.MeshBasicMaterial( { map: texture, side: THREE.DoubleSide } );
+    const material = new THREE.MeshBasicMaterial( { map: texture, side: THREE.DoubleSide, transparent: false } );
     this.material = material
     this.sphere = new THREE.Mesh(geometry,material); //definindo o objeto sendo da forma de "geometry", e do material de "material"
     this.scene.add( this.sphere );
@@ -64,16 +64,22 @@ class Scene{
     this.sprites.push(sprite)
 
     sprite.onClick = () => {
+      container.style.cursor = "wait";
+
       this.destroy()
       point.scene.createScene(scene)
       point.scene.appear()
+  
+      container.style.cursor = "pointer";
+
     }
 
     
   }
 
   appear(){
- 
+    console.log('panoramica renderizada')
+
     TweenLite.to(this.camera,0.5,{
       zoom: 1,
       onUpdate: () => {
@@ -108,6 +114,7 @@ class Scene{
       opacity: 0,
       onComplete: () => {
         this.scene.remove(this.sphere)
+        console.log('panoramica destruida')
       }
     })
     
@@ -127,11 +134,8 @@ animate();
 
 function init() {
 
-  camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
-  camera.position.set(1,0,0);
-
   scene = new THREE.Scene();
-  
+
   //RENDER
   renderer = new THREE.WebGLRenderer();
   renderer.setPixelRatio( window.devicePixelRatio );
@@ -140,11 +144,14 @@ function init() {
 
   
   //CAMERA
+  camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
+  camera.position.set(1,0,0);
+
   controls = new OrbitControls( camera, renderer.domElement );
   controls.minDistance = 0
   controls.maxDistance = 15.0
-  
 
+  
   const rayCaster = new THREE.Raycaster()
   
   
@@ -192,7 +199,7 @@ function init() {
     
     intersects.forEach((intersect) =>{
       if(intersect.object.type == 'Sprite'){
-        s1.material.transparent = true
+   
 
         intersect.object.onClick()
       }
@@ -214,20 +221,20 @@ function init() {
       if(intersect.object.type == 'Sprite'){
         console.log('hover')
       }
-
+        
     })
     
   }
 
   //Redimencionamento da tela
   window.addEventListener( 'resize', onWindowResize, false );
+   
   //Mudança do mouse ao mover a camera
   window.onmousedown = () => {container.style.cursor = "move";}
   window.onmouseup = () => {container.style.cursor = "pointer";}
-
+  
   container.addEventListener('click',onclick)
   container.addEventListener('mousemove',onMouseMove)
-  
 }
 
 function animate() {
