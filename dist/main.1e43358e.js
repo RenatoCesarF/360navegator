@@ -41488,13 +41488,10 @@ var Scene = /*#__PURE__*/function () {
       });
 
       this.sprites.forEach(function (sprite) {
-        _gsapCore.TweenLite.to(sprite.scale, 1, {
+        _gsapCore.TweenLite.to(sprite.scale, 0.5, {
           x: 0,
           y: 0,
-          z: 0,
-          onComplete: function onComplete() {
-            _this3.scene.remove(sprite);
-          }
+          z: 0
         });
       });
     }
@@ -41509,11 +41506,21 @@ animate();
 function init() {
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
   camera.position.set(1, 0, 0);
-  scene = new THREE.Scene();
+  scene = new THREE.Scene(); //RENDER
+
+  renderer = new THREE.WebGLRenderer();
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  container.appendChild(renderer.domElement); //CAMERA
+
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.minDistance = 0;
+  controls.maxDistance = 15.0;
   var rayCaster = new THREE.Raycaster(); //SPHERE
 
   var s1 = new Scene(_teste.default, camera);
-  var s2 = new Scene(_teste2.default, camera);
+  var s2 = new Scene(_teste2.default, camera); //Adicionando os pontos
+
   s1.addPoint({
     position: new THREE.Vector3(43.071192785453675, //Y
     -0.7644674190358015, //X
@@ -41523,24 +41530,15 @@ function init() {
     scene: s2
   });
   s2.addPoint({
-    position: new THREE.Vector3(-1, //Y
-    0, //X
-    0 //z
+    position: new THREE.Vector3(-43.071192785453675, //Y
+    0.7644674190358015, //X
+    -24.916103487018965 //z
     ),
     name: 'cozinha',
     scene: s1
   });
   s1.createScene(scene);
-  s1.appear(); //RENDER
-
-  renderer = new THREE.WebGLRenderer();
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement); //CAMERA
-
-  controls = new OrbitControls(camera, renderer.domElement);
-  controls.minDistance = 0;
-  controls.maxDistance = 15.0; //Função de detecção de click
+  s1.appear(); //Função de detecção de click
 
   function onclick(e) {
     var mouse = new THREE.Vector2(e.clientX / window.innerWidth * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
@@ -41552,20 +41550,32 @@ function init() {
         intersect.object.onClick();
       }
     });
+  }
+
+  function onMouseMove(e) {
+    var mouse = new THREE.Vector2(e.clientX / window.innerWidth * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
+    rayCaster.setFromCamera(mouse, camera);
+    var intersects = rayCaster.intersectObjects(scene.children);
+    intersects.forEach(function (intersect) {
+      if (intersect.object.type == 'Sprite') {
+        console.log('hover');
+      }
+    });
   } //Redimencionamento da tela
 
 
   window.addEventListener('resize', onWindowResize, false); //Mudança do mouse ao mover a camera
 
   window.onmousedown = function () {
-    document.body.style.cursor = "move";
+    container.style.cursor = "move";
   };
 
   window.onmouseup = function () {
-    document.body.style.cursor = "pointer";
+    container.style.cursor = "pointer";
   };
 
   container.addEventListener('click', onclick);
+  container.addEventListener('mousemove', onMouseMove);
 }
 
 function animate() {
@@ -41627,7 +41637,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38735" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38259" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
