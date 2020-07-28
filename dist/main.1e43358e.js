@@ -37421,10 +37421,10 @@ module.exports = function( THREE ) {
 	return OrbitControls;
 };
 
-},{}],"src/assets/teste1.jpeg":[function(require,module,exports) {
-module.exports = "/teste1.122589ee.jpeg";
 },{}],"src/assets/teste2.jpeg":[function(require,module,exports) {
 module.exports = "/teste2.4781a252.jpeg";
+},{}],"src/assets/teste1.jpeg":[function(require,module,exports) {
+module.exports = "/teste1.122589ee.jpeg";
 },{}],"src/assets/feet.svg":[function(require,module,exports) {
 module.exports = "/feet.2c2a11f2.svg";
 },{}],"node_modules/gsap/gsap-core.js":[function(require,module,exports) {
@@ -41357,9 +41357,9 @@ require("./styles.css");
 
 var THREE = _interopRequireWildcard(require("three"));
 
-var _teste = _interopRequireDefault(require("./assets/teste1.jpeg"));
+var _teste = _interopRequireDefault(require("./assets/teste2.jpeg"));
 
-var _teste2 = _interopRequireDefault(require("./assets/teste2.jpeg"));
+var _teste2 = _interopRequireDefault(require("./assets/teste1.jpeg"));
 
 var _feet = _interopRequireDefault(require("./assets/feet.svg"));
 
@@ -41371,15 +41371,138 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-/*
-Este é o arquivo que renderiza as imagens usando
-Three.js.
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-*/
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 var OrbitControls = require('three-orbit-controls')(THREE);
 
 var container = document.body;
 var camera, scene, renderer, controls;
+
+var Scene = /*#__PURE__*/function () {
+  function Scene(image, camera) {
+    _classCallCheck(this, Scene);
+
+    this.image = image;
+    this.points = [];
+    this.sprites = [];
+    this.scene = null;
+    this.camera = camera;
+  }
+
+  _createClass(Scene, [{
+    key: "createScene",
+    value: function createScene(scene) {
+      this.scene = scene;
+      var geometry = new THREE.SphereGeometry(50, 32, 42);
+      var texture = new THREE.TextureLoader().load(this.image);
+      texture.wrapS = THREE.RepeatWrapping; //Espelhando a imagem
+
+      texture.repeat.x = -1;
+      var material = new THREE.MeshBasicMaterial({
+        map: texture,
+        side: THREE.DoubleSide
+      });
+      this.material = material;
+      this.sphere = new THREE.Mesh(geometry, material); //definindo o objeto sendo da forma de "geometry", e do material de "material"
+
+      this.scene.add(this.sphere);
+      this.points.forEach(this.addTooltip.bind(this));
+    }
+  }, {
+    key: "addPoint",
+    value: function addPoint(point) {
+      this.points.push(point);
+    }
+  }, {
+    key: "addTooltip",
+    value: function addTooltip(point) {
+      var _this = this;
+
+      var spriteMap = new THREE.TextureLoader().load(_feet.default);
+      var spriteMaterial = new THREE.SpriteMaterial({
+        map: spriteMap
+      });
+      var sprite = new THREE.Sprite(spriteMaterial);
+      sprite.name = name;
+      sprite.position.copy(point.position.clone().normalize().multiplyScalar(30));
+      sprite.scale.multiplyScalar(3);
+      this.scene.add(sprite);
+      this.sprites.push(sprite);
+
+      sprite.onClick = function () {
+        _this.destroy();
+
+        point.scene.createScene(scene);
+        point.scene.appear();
+      };
+    }
+  }, {
+    key: "appear",
+    value: function appear() {
+      var _this2 = this;
+
+      _gsapCore.TweenLite.to(this.camera, 0.5, {
+        zoom: 1,
+        onUpdate: function onUpdate() {
+          _this2.camera.updateProjectionMatrix();
+        }
+      }).delay(0.5);
+
+      this.sphere.material.opacity = 0;
+
+      _gsapCore.TweenLite.to(this.sphere.material, 1, {
+        opacity: 1
+      });
+
+      this.sprites.forEach(function (sprite) {
+        sprite.scale.set(0, 0, 0);
+
+        _gsapCore.TweenLite.to(sprite.scale, 1, {
+          x: 2,
+          y: 2,
+          z: 2
+        });
+      });
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      var _this3 = this;
+
+      _gsapCore.TweenLite.to(this.camera, 1, {
+        zoom: 2,
+        onUpdate: function onUpdate() {
+          _this3.camera.updateProjectionMatrix();
+        }
+      });
+
+      _gsapCore.TweenLite.to(this.sphere.material, 1, {
+        opacity: 0,
+        onComplete: function onComplete() {
+          _this3.scene.remove(_this3.sphere);
+        }
+      });
+
+      this.sprites.forEach(function (sprite) {
+        _gsapCore.TweenLite.to(sprite.scale, 1, {
+          x: 0,
+          y: 0,
+          z: 0,
+          onComplete: function onComplete() {
+            _this3.scene.remove(sprite);
+          }
+        });
+      });
+    }
+  }]);
+
+  return Scene;
+}();
+
 init();
 animate();
 
@@ -41387,20 +41510,28 @@ function init() {
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
   camera.position.set(1, 0, 0);
   scene = new THREE.Scene();
-  var rayCaster = new THREE.Raycaster();
-  var geometry = new THREE.SphereGeometry(50, 32, 42); // Imagem original: https://live.staticflickr.com/65535/50091270432_dd1da38ee7_5k.jpg
+  var rayCaster = new THREE.Raycaster(); //SPHERE
 
-  var texture = new THREE.TextureLoader().load(_teste2.default);
-  texture.wrapS = THREE.RepeatWrapping; //Espelhando a imagem
-
-  texture.repeat.x = -1;
-  var material = new THREE.MeshBasicMaterial({
-    map: texture,
-    side: THREE.DoubleSide
+  var s1 = new Scene(_teste.default, camera);
+  var s2 = new Scene(_teste2.default, camera);
+  s1.addPoint({
+    position: new THREE.Vector3(43.071192785453675, //Y
+    -0.7644674190358015, //X
+    24.916103487018965 //z
+    ),
+    name: 'Corredor',
+    scene: s2
   });
-  var sphere = new THREE.Mesh(geometry, material); //definindo o objeto sendo da forma de "geometry", e do material de "material"
-
-  scene.add(sphere); //RENDER
+  s2.addPoint({
+    position: new THREE.Vector3(-1, //Y
+    0, //X
+    0 //z
+    ),
+    name: 'cozinha',
+    scene: s1
+  });
+  s1.createScene(scene);
+  s1.appear(); //RENDER
 
   renderer = new THREE.WebGLRenderer();
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -41409,7 +41540,20 @@ function init() {
 
   controls = new OrbitControls(camera, renderer.domElement);
   controls.minDistance = 0;
-  controls.maxDistance = 15.0; //Redimencionamento da tela
+  controls.maxDistance = 15.0; //Função de detecção de click
+
+  function onclick(e) {
+    var mouse = new THREE.Vector2(e.clientX / window.innerWidth * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
+    rayCaster.setFromCamera(mouse, camera);
+    var intersects = rayCaster.intersectObjects(scene.children);
+    intersects.forEach(function (intersect) {
+      if (intersect.object.type == 'Sprite') {
+        s1.material.transparent = true;
+        intersect.object.onClick();
+      }
+    });
+  } //Redimencionamento da tela
+
 
   window.addEventListener('resize', onWindowResize, false); //Mudança do mouse ao mover a camera
 
@@ -41419,49 +41563,7 @@ function init() {
 
   window.onmouseup = function () {
     document.body.style.cursor = "pointer";
-  }; //adicionando Simbulo de "'andar' para"
-
-
-  addTooltip(new THREE.Vector3(43.071192785453675, //Y
-  -0.7644674190358015, //X
-  24.916103487018965), //z
-  'corredor'); //função que adiciona simbulo em determinada posição
-
-  function addTooltip(position, name) {
-    var spriteMap = new THREE.TextureLoader().load(_feet.default);
-    var spriteMaterial = new THREE.SpriteMaterial({
-      map: spriteMap
-    });
-    var sprite = new THREE.Sprite(spriteMaterial);
-    sprite.name = name;
-    sprite.position.copy(position.clone().normalize().multiplyScalar(30));
-    sprite.scale.multiplyScalar(3);
-    scene.add(sprite);
-  } //função de detecção de click
-
-
-  function onclick(e) {
-    var mouse = new THREE.Vector2(e.clientX / window.innerWidth * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
-    rayCaster.setFromCamera(mouse, camera);
-    var intersects = rayCaster.intersectObjects(scene.children);
-    intersects.forEach(function (intersect) {
-      if (intersect.object.type == 'Sprite') {
-        material.transparent = true;
-        console.log(intersect.object.name);
-
-        _gsapCore.TweenLite.to(sphere.material, 0.4, {
-          opacity: 0
-        });
-      }
-    });
-    /*
-    let intersects = rayCaster.intersectObject(sphere)
-       if(intersects.length > 0){
-    console.log(intersects[0].point)
-    addTooltip(intersects[0].point)
-    }
-    */
-  }
+  };
 
   container.addEventListener('click', onclick);
 }
@@ -41497,7 +41599,7 @@ function onWindowResize() {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
-},{"./styles.css":"src/styles.css","three":"node_modules/three/build/three.module.js","three-orbit-controls":"node_modules/three-orbit-controls/index.js","./assets/teste1.jpeg":"src/assets/teste1.jpeg","./assets/teste2.jpeg":"src/assets/teste2.jpeg","./assets/feet.svg":"src/assets/feet.svg","gsap/gsap-core":"node_modules/gsap/gsap-core.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./styles.css":"src/styles.css","three":"node_modules/three/build/three.module.js","three-orbit-controls":"node_modules/three-orbit-controls/index.js","./assets/teste2.jpeg":"src/assets/teste2.jpeg","./assets/teste1.jpeg":"src/assets/teste1.jpeg","./assets/feet.svg":"src/assets/feet.svg","gsap/gsap-core":"node_modules/gsap/gsap-core.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -41525,7 +41627,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35521" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38735" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
