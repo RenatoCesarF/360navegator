@@ -2,6 +2,13 @@
 Este é o arquivo que renderiza as imagens usando
 Three.js.
 
+FIXME: quando se troca de panoramica 5 vezes,
+tudo fica lento e zoado, provavelmente é poque 
+existe mais de Scene sendo criada e destruida
+
+em vez de criar uma nova Scene, o destroy poderia
+ser apenas uma forma de diminuir a opacidade pra 0,
+ assim não precisaria carregar tantos objetos
 */
 import "./styles.css";
 import * as THREE from "three";
@@ -16,6 +23,7 @@ import { TweenLite } from "gsap/gsap-core";
 
 
 const container = document.body;
+const rayCaster = new THREE.Raycaster()
 
 var camera, scene, renderer, controls;
 
@@ -33,6 +41,8 @@ class Scene{
 
   createScene(scene){
     this.scene = scene
+    console.log('Scene created')
+    console.log(scene)
     var geometry = new THREE.SphereGeometry(50,32,42); 
   
     var texture = new THREE.TextureLoader().load(this.image);
@@ -64,22 +74,42 @@ class Scene{
     this.sprites.push(sprite)
 
     sprite.onClick = () => {
-      container.style.cursor = "wait";
 
       this.destroy()
       point.scene.createScene(scene)
       point.scene.appear()
   
-      container.style.cursor = "pointer";
-
     }
 
     
   }
 
-  appear(){
-    console.log('panoramica renderizada')
+  destroy(){
+    TweenLite.to(this.camera,1,{
+      zoom: 2,
+      onUpdate: () => {
+        this.camera.updateProjectionMatrix()
+      }
+      
+    })
+    TweenLite.to(this.sphere.material,1,{
+      opacity: 0,
+      onComplete: () => {
+        this.scene.remove(this.sphere) //sphere
+        console.log('panoramica destruida')
+      }
+    })
+    
+    this.sprites.forEach((sprite) => {
+      TweenLite.to(sprite.scale,0.5,{
+        x: 0,
+        y: 0,
+        z: 0,   
+      })
+    })
+  }
 
+  appear(){
     TweenLite.to(this.camera,0.5,{
       zoom: 1,
       onUpdate: () => {
@@ -102,60 +132,21 @@ class Scene{
     })
   }
 
-  destroy(){
-    TweenLite.to(this.camera,1,{
-      zoom: 2,
-      onUpdate: () => {
-        this.camera.updateProjectionMatrix()
-      }
-      
-    })
-    TweenLite.to(this.sphere.material,1,{
-      opacity: 0,
-      onComplete: () => {
-        this.scene.remove(this.sphere)
-        console.log('panoramica destruida')
-      }
-    })
-    
-    this.sprites.forEach((sprite) => {
-      TweenLite.to(sprite.scale,0.5,{
-        x: 0,
-        y: 0,
-        z: 0,   
-      })
-    })
-  }
-
 }
 
 init();
 animate();
 
+
 function init() {
+  
 
   scene = new THREE.Scene();
+  render();
+  cameraInit()
 
-  //RENDER
-  renderer = new THREE.WebGLRenderer();
-  renderer.setPixelRatio( window.devicePixelRatio );
-  renderer.setSize( window.innerWidth, window.innerHeight );
-  container.appendChild( renderer.domElement );
-
-  
-  //CAMERA
-  camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
-  camera.position.set(1,0,0);
-
-  controls = new OrbitControls( camera, renderer.domElement );
-  controls.minDistance = 0
-  controls.maxDistance = 15.0
-
-  
-  const rayCaster = new THREE.Raycaster()
-  
-  
-  //SPHERE
+    
+  //SPHEREs
   let s1 = new Scene(pano1, camera)
   let s2 = new Scene(pano2, camera)
 
@@ -185,6 +176,34 @@ function init() {
   s1.appear()
 
 
+  //Redimencionamento da tela
+  window.addEventListener( 'resize', onWindowResize, false );
+  
+  //Mudança do mouse ao mover a camera
+  window.onmousedown = () => {container.style.cursor = "move";}
+  window.onmouseup = () => {container.style.cursor = "pointer";}
+  
+  container.addEventListener('click',onclick)
+  container.addEventListener('mousemove',onMouseMove)
+
+  //RENDER
+  function render(){
+    renderer = new THREE.WebGLRenderer();
+    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    container.appendChild( renderer.domElement );
+  }
+
+  //CAMERA
+  function cameraInit(){
+
+    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
+    camera.position.set(1,0,0);
+    
+    controls = new OrbitControls( camera, renderer.domElement );
+    controls.minDistance = 0
+    controls.maxDistance = 15.0
+  }
 
   //Função de detecção de click
   function onclick(e){
@@ -226,15 +245,6 @@ function init() {
     
   }
 
-  //Redimencionamento da tela
-  window.addEventListener( 'resize', onWindowResize, false );
-   
-  //Mudança do mouse ao mover a camera
-  window.onmousedown = () => {container.style.cursor = "move";}
-  window.onmouseup = () => {container.style.cursor = "pointer";}
-  
-  container.addEventListener('click',onclick)
-  container.addEventListener('mousemove',onMouseMove)
 }
 
 function animate() {
