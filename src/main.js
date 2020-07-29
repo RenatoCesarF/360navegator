@@ -2,13 +2,6 @@
 Este é o arquivo que renderiza as imagens usando
 Three.js.
 
-FIXME: quando se troca de panoramica 5 vezes,
-tudo fica lento e zoado, provavelmente é poque 
-existe mais de Scene sendo criada e destruida
-
-em vez de criar uma nova Scene, o destroy poderia
-ser apenas uma forma de diminuir a opacidade pra 0,
- assim não precisaria carregar tantos objetos
 */
 import "./styles.css";
 import * as THREE from "three";
@@ -41,19 +34,20 @@ class Scene{
 
   createScene(scene){
     this.scene = scene
-    console.log('Scene created')
-    console.log(scene)
-    var geometry = new THREE.SphereGeometry(50,32,42); 
+   
+    var geometry = new THREE.SphereGeometry(50,32,42); // Formato do objeto
   
-    var texture = new THREE.TextureLoader().load(this.image);
+    var texture = new THREE.TextureLoader().load(this.image); //Carregando a imagem pra dentro do THREE
     texture.wrapS = THREE.RepeatWrapping //Espelhando a imagem
     texture.repeat.x = -1
   
+    //Definindo a imagem como material para a esfera
     const material = new THREE.MeshBasicMaterial( { map: texture, side: THREE.DoubleSide, transparent: false } );
     this.material = material
     this.sphere = new THREE.Mesh(geometry,material); //definindo o objeto sendo da forma de "geometry", e do material de "material"
     this.scene.add( this.sphere );
 
+    // pesquisar sobre isso ( ↓ ), não entendi muito bem o que isso faz
     this.points.forEach(this.addTooltip.bind(this))
   }
 
@@ -62,9 +56,9 @@ class Scene{
   }
 
   addTooltip(point){
-    let spriteMap = new THREE.TextureLoader().load(feet);
-    let spriteMaterial = new THREE.SpriteMaterial( {map: spriteMap} );
-    let sprite = new THREE.Sprite( spriteMaterial ); 
+    let spriteMap = new THREE.TextureLoader().load(feet); // Carregando a imagem à cena
+    let spriteMaterial = new THREE.SpriteMaterial( {map: spriteMap} ); // Definindo a imagem como material
+    let sprite = new THREE.Sprite( spriteMaterial ); // Criando um sprite com material do svg feet
     sprite.name = name;
     sprite.position.copy(point.position.clone().normalize().multiplyScalar(30))
 
@@ -74,7 +68,6 @@ class Scene{
     this.sprites.push(sprite)
 
     sprite.onClick = () => {
-      // o problema esta em algum lugar por aqui ↓
       this.destroy()
       point.scene.createScene(scene)
       point.scene.appear()
@@ -85,7 +78,7 @@ class Scene{
   }
 
   destroy(){
-    TweenLite.to(this.camera,0.5,{
+    TweenLite.to(this.camera,1,{//Animação da camera zoom in
       zoom: 2,
       onUpdate: () => {
         this.camera.updateProjectionMatrix()
@@ -93,15 +86,15 @@ class Scene{
       
     })
 
-    TweenLite.to(this.sphere.material,1,{
+    TweenLite.to(this.sphere.material,1,{ // Animação da opacidade da esfera desaparecendo
       opacity: 0,
       onComplete: () => {
-        this.scene.remove(this.sphere) //sphere
-        console.log('panoramica destruida')
+        this.scene.remove(this.sphere)
+        
       }
     })
     
-    this.sprites.forEach((sprite) => {
+    this.sprites.forEach((sprite) => { //animação do sprite "feet" desaparecendo
       TweenLite.to(sprite.scale,0.5,{
         x: 0,
         y: 0,
@@ -114,19 +107,19 @@ class Scene{
   }
 
   appear(){
-    TweenLite.to(this.camera,1,{
+    TweenLite.to(this.camera,1,{ //Animação da Camera
       zoom: 1,
       onUpdate: () => {
         this.camera.updateProjectionMatrix()
       }
-    }).delay(0.5)
+    }).delay(1)
     
     this.sphere.material.opacity = 0;
-    TweenLite.to(this.sphere.material,1,{
+    TweenLite.to(this.sphere.material,1,{ // Animação da opacidade da esfera
       opacity: 1
     })
 
-    this.sprites.forEach((sprite) => {
+    this.sprites.forEach((sprite) => { // Animação do sprite "feet" reaparecendo
       sprite.scale.set(0,0,0)
       TweenLite.to(sprite.scale,1,{
         x: 2,
@@ -153,7 +146,6 @@ function init() {
     
   //SPHEREs
   let s1 = new Scene(pano1, camera)
-  console.log(s1)
   let s2 = new Scene(pano2, camera)
 
   //Adicionando os pontos
@@ -259,6 +251,8 @@ function animate() {
   controls.update();
 }
 
+// Essa função não esta sendo usada aquim mas sim no HTML, 
+// é preciso importar desse arquivo para o HTML.
 function toggleFullScreen() {
     if ((document.fullScreenElement && document.fullScreenElement !== null) ||    
       (!document.mozFullScreen && !document.webkitIsFullScreen)){
