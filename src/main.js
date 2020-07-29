@@ -74,7 +74,7 @@ class Scene{
     this.sprites.push(sprite)
 
     sprite.onClick = () => {
-
+      // o problema esta em algum lugar por aqui ↓
       this.destroy()
       point.scene.createScene(scene)
       point.scene.appear()
@@ -85,13 +85,14 @@ class Scene{
   }
 
   destroy(){
-    TweenLite.to(this.camera,1,{
+    TweenLite.to(this.camera,0.5,{
       zoom: 2,
       onUpdate: () => {
         this.camera.updateProjectionMatrix()
       }
       
     })
+
     TweenLite.to(this.sphere.material,1,{
       opacity: 0,
       onComplete: () => {
@@ -105,12 +106,15 @@ class Scene{
         x: 0,
         y: 0,
         z: 0,   
+        onComplete: () =>{
+          this.scene.remove(sprite)
+        }
       })
     })
   }
 
   appear(){
-    TweenLite.to(this.camera,0.5,{
+    TweenLite.to(this.camera,1,{
       zoom: 1,
       onUpdate: () => {
         this.camera.updateProjectionMatrix()
@@ -128,6 +132,7 @@ class Scene{
         x: 2,
         y: 2,
         z: 2,
+        
       })
     })
   }
@@ -148,6 +153,7 @@ function init() {
     
   //SPHEREs
   let s1 = new Scene(pano1, camera)
+  console.log(s1)
   let s2 = new Scene(pano2, camera)
 
   //Adicionando os pontos
@@ -205,7 +211,6 @@ function init() {
     controls.maxDistance = 15.0
   }
 
-  //Função de detecção de click
   function onclick(e){
    
     let mouse  = new THREE.Vector2(
