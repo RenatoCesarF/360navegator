@@ -7,8 +7,8 @@ import "./styles.css";
 import * as THREE from "three";
 var OrbitControls = require('three-orbit-controls')(THREE)
 
-import pano1 from './assets/teste2.jpeg'; // Essa é a ultima imagem retornada dos scripts python
-import pano2 from './assets/teste1.jpeg'
+import pano1 from './assets/pan2.jpeg'; // Essa é a ultima imagem retornada dos scripts python
+import pano2 from './assets/pan1.jpeg'
 
 import feet from './assets/feet.svg'
 import { Vector3, Sprite } from "three";
